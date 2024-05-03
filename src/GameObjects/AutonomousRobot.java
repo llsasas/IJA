@@ -1,10 +1,9 @@
 package GameObjects;
 
-import javafx.scene.Node;
 import javafx.scene.shape.Circle;
 import java.lang.Math;
 
-public class ControlledRobot extends Circle {
+public class AutonomousRobot extends Circle {
 
     private double x;
     private double y;
@@ -15,11 +14,9 @@ public class ControlledRobot extends Circle {
     private double distance;
     public Maze maze;
 
-    private boolean move =false;
-
     private OnUpdateListener onUpdateListener;
 
-    public  ControlledRobot(double x, double y, int angle, int rangle, Maze maze, double distance) {
+    public  AutonomousRobot(double x, double y, int angle, int rangle, Maze maze, double distance) {
         super(x, y, 5);
         this.x = x;
         this.y = y;
@@ -39,23 +36,17 @@ public class ControlledRobot extends Circle {
         return y;
     }
 
-    public void moveForward()
-    {
-        move = true;
-    }
 
-    public void moveStop()
-    {
-        move = false;
-    }
     public void update() {
-        if(move) {
-            double newx = x + Math.cos(angle) * 5;
-            double newy = y + Math.sin(angle) * 5;
-            if (canMove(newx, newy)) {
-                x = newx;
-                y = newy;
-            }
+        double newx = x + Math.cos(angle) * 5;
+        double newy = y + Math.sin(angle) * 5;
+        if(canMove(newx,newy))
+        {
+            x = newx;
+            y = newy;
+        }
+        else {
+            rotateAc();
         }
         if (onUpdateListener != null) {
             onUpdateListener.onUpdate();
@@ -70,11 +61,13 @@ public class ControlledRobot extends Circle {
         }
         for (int i = 0; i < maze.robots.length; i++) {
             AutonomousRobot robot = maze.robots[i];
-            double obx = robot.getX();
-            double oby = robot.getY();
-            double dist= Math.sqrt(Math.pow(x - obx, 2) + Math.pow(y - oby, 2));
-            if (dist+5 < distance ) {
-                return false;
+            if(this!= robot) {
+                double obx = robot.getX();
+                double oby = robot.getY();
+                double dist = Math.sqrt(Math.pow(x - obx, 2) + Math.pow(y - oby, 2));
+                if (dist - 10 < distance) {
+                    return false;
+                }
             }
 
         }
@@ -87,9 +80,17 @@ public class ControlledRobot extends Circle {
             if (dist+5 < distance ) {
                 return false;
             }
-
         }
          */
+        if(maze.crobot != null) {
+            ControlledRobot crobot = maze.crobot;
+            double obx = crobot.getX();
+            double oby = crobot.getY();
+            double dist = Math.sqrt(Math.pow(x - obx, 2) + Math.pow(y - oby, 2));
+            if (dist + 5 < distance) {
+                return false;
+            }
+        }
         return true;
     }
 

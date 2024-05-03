@@ -1,55 +1,54 @@
 package GameObjects;
 
-import javafx.animation.AnimationTimer;
+
 import javafx.application.Application;
 import javafx.scene.Group;
 import javafx.scene.Scene;
-import javafx.scene.shape.Circle;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 
 public class ContinuousSpace extends Application {
 
     private static final int WIDTH = 800;
     private static final int HEIGHT = 600;
-
+    Maze maze;
+    GameController controller;
     @Override
     public void start(Stage primaryStage) {
-        SettingsMenu settingsMenu = new SettingsMenu();
+        maze = new Maze(600, 800);
+        controller = new GameController(maze);
+        SettingsMenu settingsMenu = new SettingsMenu(maze);
 
-        primaryStage.setScene(new Scene(settingsMenu, 720, 480));
+        primaryStage.setScene(new Scene(settingsMenu, WIDTH, HEIGHT));
         primaryStage.show();
         settingsMenu.requestFocus();
-        settingsMenu.setOnApplySettings((entities) -> {
-            primaryStage.setScene(createScene(entities));
+        settingsMenu.setOnApplySettings(() -> {
+            primaryStage.setScene(createScene());
             primaryStage.show();
-            startAnimation(entities);
+            controller.startAnimation();
         });
     }
 
-    private Scene createScene(Entity[] entities) {
+    private Scene createScene() {
         Group root = new Group();
         Scene scene = new Scene(root, WIDTH, HEIGHT);
-
-        for (Entity entity : entities) {
-            root.getChildren().add(entity.getCircle());
+        Rectangle background = new Rectangle(0, 0, HEIGHT, WIDTH);
+        background.setFill(Color.BLUEVIOLET);
+        root.getChildren().add(background);
+        for (AutonomousRobot entity : maze.robots) {
+            root.getChildren().add(entity);
+        }
+        if(maze.crobot != null)
+        {
+            root.getChildren().add(maze.crobot);
+            controller.addCrobot();
+            scene.setOnKeyPressed(event -> controller.MoveControlledRobot(event));
         }
 
         return scene;
     }
 
-    private void startAnimation(Entity[] entities) {
-        AnimationTimer timer = new AnimationTimer() {
-            @Override
-            public void handle(long now) {
-                for (Entity entity : entities) {
-                    entity.update();
-                    entity.getCircle().setCenterX(entity.getX());
-                    entity.getCircle().setCenterY(entity.getY());
-                }
-            }
-        };
-        timer.start();
-    }
 
     public static void main(String[] args) {
         launch(args);
