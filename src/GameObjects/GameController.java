@@ -6,9 +6,12 @@ import javafx.scene.input.KeyEvent;
 public class GameController {
     Maze maze;
     ControlledRobot crobot;
-    GameController(Maze maze)
+
+    Logger logger;
+    GameController(Maze maze, Logger logger)
     {
         this.maze = maze;
+        this.logger = logger;
     }
 
     public void addCrobot()
@@ -60,5 +63,24 @@ public class GameController {
             maze.crobot.setCenterX(maze.crobot.getX());
             maze.crobot.setCenterY(maze.crobot.getY());
         }
+        logPositions();
+    }
+
+    public void logPositions()
+    {
+
+        for(AutonomousRobot arobot : maze.robots)
+        {
+            double x = arobot.getX();
+            double y = arobot.getY();
+            int angle = arobot.angle;
+            logger.log("A:"+ x +","+y+","+angle);
+        }
+        if(crobot != null)
+        {
+            logger.log("C:"+ crobot.x +","+crobot.y+"," + crobot.angle);
+        }
+
+        logger.log("\n");
     }
 }

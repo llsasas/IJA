@@ -15,6 +15,9 @@ public class SettingsMenu extends GridPane {
     private ControlledSettings controlled;
     private OnApplySettingsListener onApplySettingsListener;
     private Maze maze;
+    private Logger log;
+
+    private boolean replay = false;
     int count = 0;
     public SettingsMenu() {
         showMainMenu();
@@ -31,11 +34,19 @@ public class SettingsMenu extends GridPane {
             showPlay();
             }
         );
+        replay.setOnAction(event -> {
+                    this.replay = true;
+                    maze = MapHandler.loadMap("map.txt");
+                    log = new Logger("log.txt", maze);
+            onApplySettingsListener.onApplySettings();
+                }
+        );
 
     }
 
     private void showPlay()
     {
+        log = new Logger("log.txt");
         Button loadmap = new Button("Load map");
         Button createmap = new Button("Create map");
         add(loadmap, 0, 0);
@@ -124,6 +135,14 @@ public class SettingsMenu extends GridPane {
         return this.maze;
     }
 
+    public boolean replay()
+    {
+        return this.replay;
+    }
+    public Logger getLogger()
+    {
+        return this.log;
+    }
     public interface OnApplySettingsListener {
         void onApplySettings();
     }

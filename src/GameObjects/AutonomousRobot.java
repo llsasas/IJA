@@ -3,57 +3,13 @@ package GameObjects;
 import javafx.scene.shape.Circle;
 import java.lang.Math;
 
-public class AutonomousRobot extends Circle {
+public class AutonomousRobot extends Robot {
 
-    private double x;
-    private double y;
-    int angle;
-
-    int rangle;
-
-    double distance;
-    public Maze maze;
-
-    private OnUpdateListener onUpdateListener;
-
-    public  AutonomousRobot(double x, double y, int angle, int rangle, Maze maze, double distance) {
-        super(x, y, 5);
-        this.x = x;
-        this.y = y;
-        this.angle = angle;
-        this.rangle = rangle;
-        this.maze = maze;
-        this.distance = distance;
+    public AutonomousRobot(double x, double y, int angle, int rangle, Maze maze, double distance) {
+        super(x, y, angle, rangle, maze, distance);
     }
 
-    public double getX()
-    {
-        return x;
-    }
-
-    public double getY()
-    {
-        return y;
-    }
-
-
-    public void update() {
-        double newx = x + Math.cos(angle) * 5;
-        double newy = y + Math.sin(angle) * 5;
-        if(canMove(newx,newy))
-        {
-            x = newx;
-            y = newy;
-        }
-        else {
-            rotateAc();
-        }
-        if (onUpdateListener != null) {
-            onUpdateListener.onUpdate();
-        }
-    }
-
-    private boolean canMove(double x, double y)
+    public boolean canMove(double x, double y)
     {
         if((x-5 < 0 || x+5 > maze.HEIGHT) || (y-5 < 0 || y+5 > maze.WIDTH))
         {
@@ -94,21 +50,21 @@ public class AutonomousRobot extends Circle {
         return true;
     }
 
-    public void rotateC()
-    {
-        angle = (angle + rangle) % 360;
+    public void update() {
+        double newx = x + Math.cos(angle) * 1;
+        double newy = y + Math.sin(angle) * 1;
+        if(canMove(newx,newy))
+        {
+            x = newx;
+            y = newy;
+        }
+        else {
+            rotateAc();
+        }
+        if (onUpdateListener != null) {
+            onUpdateListener.onUpdate();
+        }
     }
 
-    public void rotateAc()
-    {
-        angle = (angle - rangle + 360) % 360;
-    }
 
-    public void setOnUpdate(OnUpdateListener listener) {
-        this.onUpdateListener = listener;
-    }
-
-    public interface OnUpdateListener {
-        void onUpdate();
-    }
 }
