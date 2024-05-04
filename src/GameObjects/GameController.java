@@ -74,11 +74,11 @@ public class GameController {
             double x = arobot.getX();
             double y = arobot.getY();
             int angle = arobot.angle;
-            logger.log("A:"+ x +","+y+","+angle);
+            logger.log("A:"+ x +","+y+","+angle+"\n");
         }
         if(crobot != null)
         {
-            logger.log("C:"+ crobot.x +","+crobot.y+"," + crobot.angle);
+            logger.log("C:"+ crobot.x +","+crobot.y+"," + crobot.angle+"\n");
         }
 
         logger.log("\n");

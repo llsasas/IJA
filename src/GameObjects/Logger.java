@@ -95,7 +95,7 @@ public class Logger {
                     double x = Double.parseDouble(parts[0]);
                     double y = Double.parseDouble(parts[1]);
                     int angle = Integer.parseInt(parts[2]);
-                    addMove(x,y,angle,count);
+                    addMoveC(x,y,angle);
                     count++;
                 }
                 else if (line.equals("")) {
@@ -131,21 +131,33 @@ public class Logger {
     }
     public void addMove(double x, double y, int angle, int id)
     {
-        GameAction move = new GameAction(maze.crobot, x,y,angle);
+        GameAction move = new GameAction(maze.robots[id], x,y,angle);
         moves.add(move);
+    }
+
+    public void addMoveC(double x, double y, int angle)
+    {
+    GameAction move = new GameAction(maze.crobot, x,y,angle);
+    moves.add(move);
+
     }
 
     public void updateObjects()
     {
-        if(true) {
+        if(forward) {
             for (int i = 0; i < robotNum; i++) {
                 GameAction move = moves.get(currentMove);
                 Robot r = move.getObject();
                 r.updateLog(move.getX(),move.getY());
                 r.setCenterX(move.getX());
-                r.setCenterX(move.getY());
+                r.setCenterY(move.getY());
                 r.setAngle(move.getAngle());
                 currentMove++;
+                if(currentMove == moves.size())
+                {
+                    forward = false;
+                    currentMove --;
+                }
             }
         }
         else if (backward)
@@ -155,11 +167,14 @@ public class Logger {
                 Robot r = move.getObject();
                 r.updateLog(move.getX(),move.getY());
                 r.setCenterX(move.getX());
-                r.setCenterX(move.getY());
+                r.setCenterY(move.getY());
                 r.setAngle(move.getAngle());
                 currentMove--;
+                if(currentMove == 0)
+                {
+                    backward = false;
+                }
             }
         }
-        return;
     }
 }

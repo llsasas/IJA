@@ -28,40 +28,26 @@ public class ReplayController {
 
         hBox.setBackground(new Background(new BackgroundFill(Color.BLACK, null, null)));
 
-        ToggleButton buttonBackward = new ToggleButton(Constant.UI.BUTTON_BACKWARD);
-        ToggleButton buttonForward = new ToggleButton(Constant.UI.BUTTON_FORWARD);
+        Button buttonBackward = new Button(Constant.UI.BUTTON_BACKWARD);
+        Button buttonForward = new Button(Constant.UI.BUTTON_FORWARD);
+        Button pause = new Button(Constant.UI.BUTTON_PAUSE);
 
-
-
-        // forward and reverse
-        ToggleGroup toggleGroup = new ToggleGroup();
-        buttonBackward.setToggleGroup(toggleGroup);
-        buttonForward.setToggleGroup(toggleGroup);
         buttonBackward.setOnAction(event -> {
-            if (buttonBackward.isSelected()) {
-                buttonForward.setText(Constant.UI.BUTTON_FORWARD);
-                buttonBackward.setText(Constant.UI.BUTTON_PAUSE);
                 gameLogger.setBackward();
-            } else {
-                buttonBackward.setText(Constant.UI.BUTTON_BACKWARD);
-                gameLogger.setPause();
-            }
+
         });
         buttonForward.setOnAction(event -> {
-            if (buttonForward.isSelected()) {
-                buttonBackward.setText(Constant.UI.BUTTON_BACKWARD);
-                buttonForward.setText(Constant.UI.BUTTON_PAUSE);
                 gameLogger.setForward();
-            } else {
-                buttonForward.setText(Constant.UI.BUTTON_FORWARD);
-                gameLogger.setPause();
-            }
+        });
+
+        pause.setOnAction(event -> {
+            gameLogger.setPause();
         });
 
 
-        hBox.getChildren().addAll(buttonBackward,buttonForward);
-        hBox.setPrefHeight(App.getGame().getMaze().HEIGHT);
-
+        hBox.getChildren().addAll(buttonBackward,pause,buttonForward);
+        //hBox.setPrefHeight((double) App.getGame().getMaze().HEIGHT /10);
+        hBox.setLayoutY(App.getGame().getMaze().HEIGHT);
         return hBox;
     }
 
@@ -69,10 +55,10 @@ public class ReplayController {
         AnimationTimer timer = new AnimationTimer() {
             @Override
             public void handle(long now) {
-
                 gameLogger.updateObjects();
             }
         };
+
 
         timer.start();
     }

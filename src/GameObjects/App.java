@@ -5,6 +5,7 @@ import javafx.application.Application;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
@@ -26,6 +27,7 @@ public class App extends Application {
         SettingsMenu settingsMenu = new SettingsMenu();
 
         primaryStage.setScene(new Scene(settingsMenu, WIDTH, HEIGHT));
+        primaryStage.setFullScreen(true);
         primaryStage.show();
         settingsMenu.requestFocus();
         settingsMenu.setOnApplySettings(() -> {
@@ -37,12 +39,14 @@ public class App extends Application {
                 log.setMaze(maze);
                 log.parseLog();
                 primaryStage.setScene(createReplay());
+                primaryStage.setFullScreen(true);
                 primaryStage.show();
                 rController.startAnimation();
             }
             else {
                 controller = new GameController(maze, log);
                 primaryStage.setScene(createScene());
+                primaryStage.setFullScreen(true);
                 primaryStage.show();
                 controller.startAnimation();
             }
@@ -53,9 +57,9 @@ public class App extends Application {
         Group root = new Group();
         Scene scene = new Scene(root, WIDTH, HEIGHT);
         Rectangle background = new Rectangle(0, 0, HEIGHT, WIDTH);
-        background.setFill(Color.BLUEVIOLET);
+        background.setFill(Color.LIGHTSTEELBLUE);
         root.getChildren().add(background);
-        log.log("N:"+ maze.robots.length+"\t");
+        log.log("N:"+ maze.robots.length+"\n");
         for (AutonomousRobot entity : maze.robots) {
             root.getChildren().add(entity);
             double x = entity.getX();
@@ -63,7 +67,7 @@ public class App extends Application {
             int angle = entity.angle;
             int rangle = entity.rangle;
             double distance = entity.distance;
-            log.log("Ai:"+ x +","+y+","+angle + ","+rangle+","+distance);
+            log.log("Ai:"+ x +","+y+","+angle + ","+rangle+","+distance+"\n");
         }
         if(maze.crobot != null)
         {
@@ -71,7 +75,7 @@ public class App extends Application {
             root.getChildren().add(maze.crobot);
             controller.addCrobot();
             scene.setOnKeyPressed(event -> controller.MoveControlledRobot(event));
-            log.log("Ci:"+ crobot.x +","+crobot.y+","+crobot.angle + ","+crobot.rangle + ","+ crobot.distance);
+            log.log("Ci:"+ crobot.x +","+crobot.y+","+crobot.angle + ","+crobot.rangle + ","+ crobot.distance+"\n");
         }
         log.log("\n");
 
@@ -81,13 +85,15 @@ public class App extends Application {
     private Scene createReplay()
     {
         Group root = new Group();
-        Scene scene = new Scene(root, WIDTH, HEIGHT);
+        Scene scene = new Scene(root, WIDTH, HEIGHT+200);
         rController= new ReplayController();
         HBox hbox =  rController.getControls();
-        root.getChildren().add(hbox);
+        hbox.setLayoutY(HEIGHT+200);
+        hbox.setLayoutX(200);
         Rectangle background = new Rectangle(0, 0, HEIGHT, WIDTH);
-        background.setFill(Color.BLUEVIOLET);
+        background.setFill(Color.LIGHTSTEELBLUE);
         root.getChildren().add(background);
+        root.getChildren().add(hbox);
         for (AutonomousRobot entity : maze.robots) {
             root.getChildren().add(entity);
         }
