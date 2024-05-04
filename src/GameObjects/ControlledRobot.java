@@ -8,11 +8,11 @@ public class ControlledRobot extends Circle {
 
     private double x;
     private double y;
-    private int angle;
+    public int angle;
 
-    private int rangle;
+    int rangle;
 
-    private double distance;
+    double distance;
     public Maze maze;
 
     private boolean move =false;

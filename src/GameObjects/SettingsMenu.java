@@ -14,15 +14,10 @@ public class SettingsMenu extends GridPane {
     private AutonomousSettings[] autonomous;
     private ControlledSettings controlled;
     private OnApplySettingsListener onApplySettingsListener;
-
     private Maze maze;
     int count = 0;
-    public SettingsMenu(Maze maze) {
-        this.maze = maze;
+    public SettingsMenu() {
         showMainMenu();
-
-
-
     }
 
     private void showMainMenu()
@@ -50,9 +45,16 @@ public class SettingsMenu extends GridPane {
             showMapCreate();
         }
         );
+
+        loadmap.setOnAction(event -> {
+            maze = MapHandler.loadMap("map.txt");
+            onApplySettingsListener.onApplySettings();
+                }
+        );
     }
     private void showMapCreate()
     {
+        maze = new Maze(600,800);
         Label countLabel = new Label("Number of autonomous robots:");
         countField = new TextField("1");
         Button applyButton = new Button("Set");
@@ -60,6 +62,7 @@ public class SettingsMenu extends GridPane {
         countField2 = new TextField("1");
         Button savemap = new Button("Save map");
         Button confirmButton = new Button("Confirm");
+        Button start = new Button("Start");
         add(countLabel, 0, 0);
         add(countField, 1, 0);
         add(countLabel2, 0, 1);
@@ -82,7 +85,9 @@ public class SettingsMenu extends GridPane {
                 add(controlled, 0, count*5);
             }
             add(confirmButton, 0, count*5+1);
+
         });
+
         confirmButton.setOnAction(event -> {
             if (onApplySettingsListener != null) {
                 maze.robots = new AutonomousRobot[autonomous.length];
@@ -93,15 +98,34 @@ public class SettingsMenu extends GridPane {
                 {
                     maze.crobot = controlled.getEntity();
                 }
-                onApplySettingsListener.onApplySettings();
+                getChildren().clear();
+                add(savemap, 0, 0);
             }
         });
+        savemap.setOnAction(event -> {
+                    MapHandler.saveMap("map.txt", maze);
+                    getChildren().clear();
+                    add(start, 0, 0);
+                }
+        );
+
+        start.setOnAction(event -> {
+                    onApplySettingsListener.onApplySettings();
+                }
+        );
+
     }
     public void setOnApplySettings(OnApplySettingsListener listener) {
         this.onApplySettingsListener = listener;
     }
 
+    public Maze getMaze()
+    {
+        return this.maze;
+    }
+
     public interface OnApplySettingsListener {
         void onApplySettings();
     }
+
 }

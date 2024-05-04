@@ -1,0 +1,5 @@
+MapWidth: 800
+MapHeight: 600
+NumAutonomousRobots: 1
+AutonomousRobot: 54.0,65.0,76,43,10.0
+ControlledRobot: 300.0,300.0,65,54,10.0

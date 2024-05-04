@@ -7,11 +7,11 @@ public class AutonomousRobot extends Circle {
 
     private double x;
     private double y;
-    private int angle;
+    int angle;
 
-    private int rangle;
+    int rangle;
 
-    private double distance;
+    double distance;
     public Maze maze;
 
     private OnUpdateListener onUpdateListener;

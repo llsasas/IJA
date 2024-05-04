@@ -16,14 +16,15 @@ public class ContinuousSpace extends Application {
     GameController controller;
     @Override
     public void start(Stage primaryStage) {
-        maze = new Maze(600, 800);
-        controller = new GameController(maze);
-        SettingsMenu settingsMenu = new SettingsMenu(maze);
+
+        SettingsMenu settingsMenu = new SettingsMenu();
 
         primaryStage.setScene(new Scene(settingsMenu, WIDTH, HEIGHT));
         primaryStage.show();
         settingsMenu.requestFocus();
         settingsMenu.setOnApplySettings(() -> {
+            maze = settingsMenu.getMaze();
+            controller = new GameController(maze);
             primaryStage.setScene(createScene());
             primaryStage.show();
             controller.startAnimation();
