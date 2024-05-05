@@ -1,0 +1,66 @@
+@options
+@argfile
+--class-path
+'C:/Users/Samuel/.m2/repository/org/openjfx/javafx-controls/17.0.2/javafx-controls-17.0.2.jar;C:/Users/Samuel/.m2/repository/org/openjfx/javafx-graphics/17.0.2/javafx-graphics-17.0.2.jar;C:/Users/Samuel/.m2/repository/org/openjfx/javafx-base/17.0.2/javafx-base-17.0.2.jar;C:/Users/Samuel/.m2/repository/org/openjfx/javafx-fxml/17.0.2/javafx-fxml-17.0.2.jar;C:/Users/Samuel/.m2/repository/junit/junit/4.13.2/junit-4.13.2.jar;C:/Users/Samuel/.m2/repository/org/hamcrest/hamcrest-core/1.3/hamcrest-core-1.3.jar'
+--module-path
+'C:/Users/Samuel/.m2/repository/org/openjfx/javafx-base/17.0.2/javafx-base-17.0.2-win.jar;C:/Users/Samuel/.m2/repository/org/openjfx/javafx-graphics/17.0.2/javafx-graphics-17.0.2-win.jar;C:/Users/Samuel/Documents/GitHub/RobotsIja/build/classes;C:/Users/Samuel/.m2/repository/org/openjfx/javafx-controls/17.0.2/javafx-controls-17.0.2-win.jar;C:/Users/Samuel/.m2/repository/org/openjfx/javafx-fxml/17.0.2/javafx-fxml-17.0.2-win.jar'
+--patch-module
+RobotsIja='C:/Users/Samuel/Documents/GitHub/RobotsIja/src/main/java;C:/Users/Samuel/Documents/GitHub/RobotsIja/build/generated-sources/annotations'
+-encoding
+'UTF-8'
+-private
+-quiet
+-source
+'17'
+--module-source-path
+'C:/Users/Samuel/Documents/GitHub/RobotsIja/build/site/apidocs/src'
+-author
+-bottom
+'Copyright &#169; 2024. All rights reserved.'
+-charset
+'UTF-8'
+-d
+'C:/Users/Samuel/Documents/GitHub/RobotsIja/build/site/apidocs'
+-docencoding
+'UTF-8'
+-doctitle
+'RobotsIja 1.0 API'
+-use
+-version
+-windowtitle
+'RobotsIja 1.0 API'
+'C:/Users/Samuel/Documents/GitHub/RobotsIja/src/main/java/module-info.java'
+'C:/Users/Samuel/Documents/GitHub/RobotsIja/src/main/java/Robots/App.java'
+'C:/Users/Samuel/Documents/GitHub/RobotsIja/src/main/java/Robots/Constant.java'
+'C:/Users/Samuel/Documents/GitHub/RobotsIja/src/main/java/Robots/Controllers/GameAction.java'
+'C:/Users/Samuel/Documents/GitHub/RobotsIja/src/main/java/Robots/Controllers/GameController.java'
+'C:/Users/Samuel/Documents/GitHub/RobotsIja/src/main/java/Robots/Controllers/Logger.java'
+'C:/Users/Samuel/Documents/GitHub/RobotsIja/src/main/java/Robots/Controllers/MapHandler.java'
+'C:/Users/Samuel/Documents/GitHub/RobotsIja/src/main/java/Robots/Controllers/ReplayController.java'
+'C:/Users/Samuel/Documents/GitHub/RobotsIja/src/main/java/Robots/Game.java'
+'C:/Users/Samuel/Documents/GitHub/RobotsIja/src/main/java/Robots/GameObjects/AutonomousRobot.java'
+'C:/Users/Samuel/Documents/GitHub/RobotsIja/src/main/java/Robots/GameObjects/ControlledRobot.java'
+'C:/Users/Samuel/Documents/GitHub/RobotsIja/src/main/java/Robots/GameObjects/Maze.java'
+'C:/Users/Samuel/Documents/GitHub/RobotsIja/src/main/java/Robots/GameObjects/Obstacle.java'
+'C:/Users/Samuel/Documents/GitHub/RobotsIja/src/main/java/Robots/GameObjects/Robot.java'
+'C:/Users/Samuel/Documents/GitHub/RobotsIja/src/main/java/Robots/View/AutonomousSettings.java'
+'C:/Users/Samuel/Documents/GitHub/RobotsIja/src/main/java/Robots/View/ControlledSettings.java'
+'C:/Users/Samuel/Documents/GitHub/RobotsIja/src/main/java/Robots/View/ObstacleSettings.java'
+'C:/Users/Samuel/Documents/GitHub/RobotsIja/src/main/java/Robots/View/SettingsMenu.java'
+C:\Users\Samuel\Documents\GitHub\RobotsIja\build\site\apidocs\allclasses-index.html = 1714937412373
+C:\Users\Samuel\Documents\GitHub\RobotsIja\build\site\apidocs\allpackages-index.html = 1714937412377
+C:\Users\Samuel\Documents\GitHub\RobotsIja\build\site\apidocs\constant-values.html = 1714937412152
+C:\Users\Samuel\Documents\GitHub\RobotsIja\build\site\apidocs\element-list = 1714937411941
+C:\Users\Samuel\Documents\GitHub\RobotsIja\build\site\apidocs\help-doc.html = 1714937412441
+C:\Users\Samuel\Documents\GitHub\RobotsIja\build\site\apidocs\index-all.html = 1714937412431
+C:\Users\Samuel\Documents\GitHub\RobotsIja\build\site\apidocs\index.html = 1714937412434
+C:\Users\Samuel\Documents\GitHub\RobotsIja\build\site\apidocs\jquery-ui.overrides.css = 1714937412461
+C:\Users\Samuel\Documents\GitHub\RobotsIja\build\site\apidocs\member-search-index.js = 1714937412384
+C:\Users\Samuel\Documents\GitHub\RobotsIja\build\site\apidocs\module-search-index.js = 1714937412379
+C:\Users\Samuel\Documents\GitHub\RobotsIja\build\site\apidocs\overview-tree.html = 1714937412333
+C:\Users\Samuel\Documents\GitHub\RobotsIja\build\site\apidocs\package-search-index.js = 1714937412381
+C:\Users\Samuel\Documents\GitHub\RobotsIja\build\site\apidocs\script.js = 1714937412447
+C:\Users\Samuel\Documents\GitHub\RobotsIja\build\site\apidocs\search.js = 1714937412449
+C:\Users\Samuel\Documents\GitHub\RobotsIja\build\site\apidocs\stylesheet.css = 1714937412445
+C:\Users\Samuel\Documents\GitHub\RobotsIja\build\site\apidocs\tag-search-index.js = 1714937412386
+C:\Users\Samuel\Documents\GitHub\RobotsIja\build\site\apidocs\type-search-index.js = 1714937412383

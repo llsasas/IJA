@@ -1,6 +1,0 @@
-MapWidth: 800
-MapHeight: 600
-NumObstacles: 1
-Obstacle: 200.0,200.0
-NumAutonomousRobots: 0
-ControlledRobot: 150.0,150.0,0,45,20.0
