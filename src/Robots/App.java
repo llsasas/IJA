@@ -1,32 +1,37 @@
-package GameObjects;
+package Robots;
 
-
+import Robots.GameObjects.Obstacle;
 import javafx.application.Application;
 import javafx.scene.Group;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
+import Robots.GameObjects.Maze;
+import Robots.GameObjects.ControlledRobot;
+import Robots.GameObjects.AutonomousRobot;
+import Robots.Controllers.ReplayController;
+import Robots.Controllers.GameController;
+import Robots.Controllers.Logger;
+import Robots.View.SettingsMenu;
 
 public class App extends Application {
 
     private static final int WIDTH = 800;
     private static final int HEIGHT = 600;
+    private Button returnButton;
     Maze maze;
-
-    boolean play;
     GameController controller;
     Logger log;
     static Game game;
     ReplayController rController;
     @Override
     public void start(Stage primaryStage) {
-
         SettingsMenu settingsMenu = new SettingsMenu();
-
-        primaryStage.setScene(new Scene(settingsMenu, WIDTH, HEIGHT));
+        Scene sets = new Scene(settingsMenu, 200, 200);
+        primaryStage.setScene(sets);
         primaryStage.setFullScreen(true);
         primaryStage.show();
         settingsMenu.requestFocus();
@@ -34,19 +39,25 @@ public class App extends Application {
             maze = settingsMenu.getMaze();
             log = settingsMenu.getLogger();
             game = new Game(log, maze);
+            returnButton= new Button("Return");
+            returnButton.setOnAction(event -> {
+                primaryStage.close();
+                primaryStage.setScene(sets);
+                primaryStage.setFullScreen(true);
+                primaryStage.show();
+            });
             if(settingsMenu.replay())
             {
+                settingsMenu.replay = false;
                 log.setMaze(maze);
                 log.parseLog();
                 primaryStage.setScene(createReplay());
-                primaryStage.setFullScreen(true);
                 primaryStage.show();
                 rController.startAnimation();
             }
             else {
                 controller = new GameController(maze, log);
                 primaryStage.setScene(createScene());
-                primaryStage.setFullScreen(true);
                 primaryStage.show();
                 controller.startAnimation();
             }
@@ -54,12 +65,16 @@ public class App extends Application {
     }
 
     private Scene createScene() {
+
         Group root = new Group();
-        Scene scene = new Scene(root, WIDTH, HEIGHT);
-        Rectangle background = new Rectangle(0, 0, HEIGHT, WIDTH);
+        Scene scene = new Scene(root, WIDTH, HEIGHT+30);
+        Rectangle background = new Rectangle(0, 0, WIDTH, HEIGHT);
         background.setFill(Color.LIGHTSTEELBLUE);
         root.getChildren().add(background);
-        log.log("N:"+ maze.robots.length+"\n");
+        root.getChildren().add(returnButton);
+        returnButton.setLayoutY(HEIGHT);
+        returnButton.setLayoutX(WIDTH/2);
+        log.log("Nr:"+ maze.robots.length+"\n");
         for (AutonomousRobot entity : maze.robots) {
             root.getChildren().add(entity);
             double x = entity.getX();
@@ -68,6 +83,12 @@ public class App extends Application {
             int rangle = entity.rangle;
             double distance = entity.distance;
             log.log("Ai:"+ x +","+y+","+angle + ","+rangle+","+distance+"\n");
+        }
+        log.log("No:"+ maze.obstacles.length+"\n");
+        for(Obstacle obstacle : maze.obstacles)
+        {
+            root.getChildren().add(obstacle);
+            log.log("Ob:"+ obstacle.CenterX()+","+ obstacle.CenterY() +"\n");
         }
         if(maze.crobot != null)
         {
@@ -82,29 +103,33 @@ public class App extends Application {
         return scene;
     }
 
-    private Scene createReplay()
-    {
+    private Scene createReplay() {
         Group root = new Group();
-        Scene scene = new Scene(root, WIDTH, HEIGHT+200);
-        rController= new ReplayController();
-        HBox hbox =  rController.getControls();
-        hbox.setLayoutY(HEIGHT+200);
-        hbox.setLayoutX(200);
-        Rectangle background = new Rectangle(0, 0, HEIGHT, WIDTH);
+        Scene scene = new Scene(root, WIDTH, HEIGHT + 50);
+        rController = new ReplayController();
+        HBox hbox = rController.getControls(returnButton);
+        hbox.setLayoutY(HEIGHT);
+        hbox.setLayoutX(300);
+        Rectangle background = new Rectangle(0, 0, WIDTH, HEIGHT);
         background.setFill(Color.LIGHTSTEELBLUE);
         root.getChildren().add(background);
         root.getChildren().add(hbox);
-        for (AutonomousRobot entity : maze.robots) {
-            root.getChildren().add(entity);
-        }
-        if(maze.crobot != null)
-        {
-            root.getChildren().add(maze.crobot);
-        }
+        if (maze.robots != null) {
+            for (AutonomousRobot entity : maze.robots) {
+                root.getChildren().add(entity);
+            }
 
+            if (maze.obstacles != null) {
+                for (Obstacle obstacle : maze.obstacles) {
+                    root.getChildren().add(obstacle);
+                }
+            }
+            if (maze.crobot != null) {
+                root.getChildren().add(maze.crobot);
+            }
+        }
         return scene;
     }
-
     public static Game getGame()
     {
         return game;

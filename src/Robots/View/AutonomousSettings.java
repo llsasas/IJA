@@ -1,10 +1,11 @@
-package GameObjects;
+package Robots.View;
 
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
-
-public class ControlledSettings extends GridPane {
+import Robots.GameObjects.Maze;
+import Robots.GameObjects.AutonomousRobot;
+public class AutonomousSettings extends GridPane {
 
     private TextField xField;
     private TextField yField;
@@ -14,9 +15,9 @@ public class ControlledSettings extends GridPane {
 
     private Maze maze;
 
-    public ControlledSettings(Maze maze) {
+    public AutonomousSettings(Maze maze) {
         this.maze = maze;
-        Label titleLabel = new Label("Controlled robot");
+        Label titleLabel = new Label("Autonomous robot");
         Label xLabel = new Label("X:");
         xField = new TextField();
         Label yLabel = new Label("Y:");
@@ -41,12 +42,12 @@ public class ControlledSettings extends GridPane {
         add(distanceField, 1, 5);
     }
 
-    public ControlledRobot getEntity() {
+    public AutonomousRobot getEntity() {
         double x = Double.parseDouble(xField.getText());
         double y = Double.parseDouble(yField.getText());
         int angle = Integer.parseInt(angleField.getText());
         int rangle = Integer.parseInt(rangleField.getText());
         double distance = Double.parseDouble(distanceField.getText());
-        return new ControlledRobot(x,y,angle, rangle, maze, distance);
+        return new AutonomousRobot(x,y,angle, rangle, maze, distance);
     }
 }

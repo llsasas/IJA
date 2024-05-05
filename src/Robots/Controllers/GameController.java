@@ -1,6 +1,11 @@
-package GameObjects;
+package Robots.Controllers;
 
+import Robots.GameObjects.AutonomousRobot;
+import Robots.GameObjects.ControlledRobot;
+import Robots.GameObjects.Maze;
+import Robots.GameObjects.Obstacle;
 import javafx.animation.AnimationTimer;
+import javafx.scene.Group;
 import javafx.scene.input.KeyEvent;
 
 public class GameController {
@@ -8,7 +13,7 @@ public class GameController {
     ControlledRobot crobot;
 
     Logger logger;
-    GameController(Maze maze, Logger logger)
+    public GameController(Maze maze, Logger logger)
     {
         this.maze = maze;
         this.logger = logger;
@@ -18,9 +23,7 @@ public class GameController {
     {
         crobot = maze.crobot;
     }
-    public void handleKeyPress(KeyEvent event) {
-        MoveControlledRobot(event);
-    }
+
     public void MoveControlledRobot(KeyEvent e)
     {
         switch (e.getCode())
@@ -83,4 +86,5 @@ public class GameController {
 
         logger.log("\n");
     }
+
 }

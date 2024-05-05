@@ -1,14 +1,17 @@
-package GameObjects;
+package Robots.Controllers;
 
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
+import Robots.GameObjects.Maze;
+import Robots.GameObjects.AutonomousRobot;
+import Robots.GameObjects.ControlledRobot;
+import Robots.GameObjects.Obstacle;
+import Robots.GameObjects.Robot;
 
 public class Logger {
     private List<GameAction> moves;
     private int currentMove = 0;
-
-    private int lastMove;
 
     Maze maze;
     private int robotNum;
@@ -17,10 +20,14 @@ public class Logger {
     boolean backward = false;
     private final File file;
 
-    public Logger(String filename) {
+    public Logger(String filename) throws IOException {
         //String filePath = System.getProperty("user.dir") + File.separator + "data" + File.separator + "logs" + File.separator;
         file = new File(filename);
-
+        if (file.exists())
+        {
+            file.delete();
+            file.createNewFile();
+        }
         try {
             if (file.createNewFile()) {
                 System.getLogger(Logger.class.getName()).log(System.Logger.Level.INFO, "Created new log file: " + file.getName());
@@ -48,12 +55,14 @@ public class Logger {
     public void parseLog() {
         try (BufferedReader br = new BufferedReader(new FileReader(file))) {
             String line;
-            AutonomousRobot robots[] = new AutonomousRobot[0];
+            AutonomousRobot[] robots = new AutonomousRobot[0];
+            Obstacle[] obstacles = new Obstacle[0];
             int count = 0;
+            int count1=0;
             while ((line = br.readLine()) != null) {
-                if(line.startsWith("N:"))
+                if(line.startsWith("Nr:"))
                 {
-                    String ns = line.substring(2);
+                    String ns = line.substring(3);
                     int number = Integer.parseInt(ns);
                     robots = new AutonomousRobot[number];
                 }
@@ -66,6 +75,19 @@ public class Logger {
                     double distance = Double.parseDouble(parts[4]);
                     robots[count] = new AutonomousRobot(x,y,angle,rangle, maze,distance);
                     count++;
+                }
+                else if(line.startsWith("No:"))
+                {
+                    String ns = line.substring(3);
+                    int number = Integer.parseInt(ns);
+                    obstacles = new Obstacle[number];
+                }
+                else if (line.startsWith("Ob:")) {
+                    String[] parts = line.substring(3).split(",");
+                    double x = Double.parseDouble(parts[0]);
+                    double y = Double.parseDouble(parts[1]);
+                    obstacles[count1] = new Obstacle(x,y);
+                    count1++;
                 } else if (line.startsWith("Ci:")) {
                     String[] parts = line.substring(3).split(",");
                     double x = Double.parseDouble(parts[0]);
@@ -75,11 +97,15 @@ public class Logger {
                     double distance = Double.parseDouble(parts[4]);
                     maze.crobot = new ControlledRobot(x,y,angle,rangle,maze,distance);
                     count++;
-                } else {
+                }
+                else {
                     break;
                 }
             }
-
+            maze.robots = robots;
+            if(count1!= 0) {
+                maze.obstacles = obstacles;
+            }
             robotNum = count;
             count = 0;
             while ((line = br.readLine()) != null) {
@@ -98,7 +124,7 @@ public class Logger {
                     addMoveC(x,y,angle);
                     count++;
                 }
-                else if (line.equals("")) {
+                else if (line.isEmpty()) {
                     count = 0;
                 }
             }
@@ -145,6 +171,11 @@ public class Logger {
     public void updateObjects()
     {
         if(forward) {
+            if(currentMove == moves.size() - 1)
+            {
+                forward = false;
+                return;
+            }
             for (int i = 0; i < robotNum; i++) {
                 GameAction move = moves.get(currentMove);
                 Robot r = move.getObject();
@@ -156,12 +187,18 @@ public class Logger {
                 if(currentMove == moves.size())
                 {
                     forward = false;
-                    currentMove --;
+                    currentMove--;
+                    return;
                 }
             }
         }
         else if (backward)
         {
+            if(currentMove == 0)
+            {
+                backward = false;
+                return;
+            }
             for (int i = 0; i < robotNum; i++) {
                 GameAction move = moves.get(currentMove);
                 Robot r = move.getObject();
@@ -173,6 +210,7 @@ public class Logger {
                 if(currentMove == 0)
                 {
                     backward = false;
+                    return;
                 }
             }
         }

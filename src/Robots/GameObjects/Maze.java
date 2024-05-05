@@ -1,17 +1,15 @@
-package GameObjects;
-
-import javafx.scene.Group;
+package Robots.GameObjects;
 
 public class Maze {
-    final int HEIGHT;
-    final int WIDTH;
+    public final int HEIGHT;
+    public final int WIDTH;
 
     public AutonomousRobot[] robots;
     public Obstacle[] obstacles;
 
     public ControlledRobot crobot;
 
-    public Maze(int height, int width) {
+    public Maze(int width,int height) {
         HEIGHT = height;
         WIDTH = width;
     }

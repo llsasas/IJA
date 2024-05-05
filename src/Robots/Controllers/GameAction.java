@@ -1,5 +1,6 @@
-package GameObjects;
+package Robots.Controllers;
 
+import Robots.GameObjects.Robot;
 
 
 public class GameAction {

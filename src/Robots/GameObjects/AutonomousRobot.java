@@ -1,17 +1,19 @@
-package GameObjects;
+package Robots.GameObjects;
 
-import javafx.scene.shape.Circle;
+import javafx.scene.paint.Color;
+
 import java.lang.Math;
 
 public class AutonomousRobot extends Robot {
 
     public AutonomousRobot(double x, double y, int angle, int rangle, Maze maze, double distance) {
         super(x, y, angle, rangle, maze, distance);
+        this.setFill(Color.YELLOW);
     }
 
     public boolean canMove(double x, double y)
     {
-        if((x-5 < 0 || x+5 > maze.HEIGHT) || (y-5 < 0 || y+5 > maze.WIDTH))
+        if(((x - 15 - distance) < 0 || (x + 15+distance) > maze.HEIGHT) || ((y - 15 - distance) < 0 || (y + 15 + distance) > maze.WIDTH))
         {
             return false;
         }
@@ -21,29 +23,28 @@ public class AutonomousRobot extends Robot {
                 double obx = robot.getX();
                 double oby = robot.getY();
                 double dist = Math.sqrt(Math.pow(x - obx, 2) + Math.pow(y - oby, 2));
-                if (dist - 10 < distance) {
+                if (dist - 30 < distance) {
                     return false;
                 }
             }
 
         }
-        /*
         for (int i = 0; i < maze.obstacles.length; i++) {
             Obstacle obstacle = maze.obstacles[i];
-            double obx = getX();
-            double oby = getY();
+            double obx = obstacle.CenterX();
+            double oby = obstacle.CenterY();
             double dist= Math.sqrt(Math.pow(x - obx, 2) + Math.pow(y - oby, 2));
-            if (dist+5 < distance ) {
+            if (dist-(15+21.22) < distance ) {
                 return false;
             }
         }
-         */
+
         if(maze.crobot != null) {
             ControlledRobot crobot = maze.crobot;
             double obx = crobot.getX();
             double oby = crobot.getY();
             double dist = Math.sqrt(Math.pow(x - obx, 2) + Math.pow(y - oby, 2));
-            if (dist + 5 < distance) {
+            if (dist - 30 < distance) {
                 return false;
             }
         }
@@ -51,8 +52,8 @@ public class AutonomousRobot extends Robot {
     }
 
     public void update() {
-        double newx = x + Math.cos(angle) * 1;
-        double newy = y + Math.sin(angle) * 1;
+        double newx = x + Math.cos(Math.toRadians(angle)) * 1;
+        double newy = y + Math.sin(Math.toRadians(angle)) * 1;
         if(canMove(newx,newy))
         {
             x = newx;

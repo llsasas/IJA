@@ -1,4 +1,4 @@
-package GameObjects;
+package Robots;
 
 public class Constant {
 

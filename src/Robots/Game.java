@@ -1,16 +1,18 @@
-package GameObjects;
+package Robots;
+
+import Robots.Controllers.Logger;
+import Robots.GameObjects.Maze;
 
 public class Game {
 
-    private Logger logger;
-    private Maze maze;
+    private final Logger logger;
+    private final Maze maze;
 
     Game(Logger logger, Maze maze)
     {
         this.logger = logger;
         this.maze = maze;
     }
-    private boolean replay = false;
 
     public Maze getMaze()
     {

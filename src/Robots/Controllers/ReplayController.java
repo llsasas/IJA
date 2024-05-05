@@ -1,12 +1,15 @@
-package GameObjects;
+package Robots.Controllers;
 
+import Robots.App;
+import Robots.Constant;
+import Robots.GameObjects.AutonomousRobot;
+import Robots.GameObjects.Maze;
+import Robots.GameObjects.Obstacle;
 import javafx.animation.AnimationTimer;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.Node;
+import javafx.scene.Group;
 import javafx.scene.control.Button;
-import javafx.scene.control.ToggleButton;
-import javafx.scene.control.ToggleGroup;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.HBox;
@@ -14,13 +17,13 @@ import javafx.scene.paint.Color;
 
 public class ReplayController {
 
-    private Logger gameLogger = App.getGame().getLogger();
+    private final Logger gameLogger = App.getGame().getLogger();
 
     /**
      * Returns the controls for replaying the game
      * @return box with controls
      */
-    public HBox getControls() {
+    public HBox getControls(Button rbutton) {
         HBox hBox = new HBox();
         hBox.setPadding(new Insets(10.0));
         hBox.setSpacing(20.0);
@@ -45,9 +48,7 @@ public class ReplayController {
         });
 
 
-        hBox.getChildren().addAll(buttonBackward,pause,buttonForward);
-        //hBox.setPrefHeight((double) App.getGame().getMaze().HEIGHT /10);
-        hBox.setLayoutY(App.getGame().getMaze().HEIGHT);
+        hBox.getChildren().addAll(buttonBackward,pause,buttonForward,rbutton);
         return hBox;
     }
 

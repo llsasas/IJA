@@ -1,20 +1,19 @@
-package GameObjects;
+package Robots.GameObjects;
 
 import javafx.scene.shape.Circle;
-import java.lang.Math;
 
 public abstract class Robot extends Circle {
 
-    protected double x;
-    protected double y;
-    protected int angle;
-    protected int rangle;
-    protected double distance;
+    public double x;
+    public double y;
+    public int angle;
+    public int rangle;
+    public double distance;
     protected Maze maze;
     protected OnUpdateListener onUpdateListener;
 
     public Robot(double x, double y, int angle, int rangle, Maze maze, double distance) {
-        super(x, y, 10);
+        super(x, y, 15);
         this.x = x;
         this.y = y;
         this.angle = angle;
@@ -35,11 +34,11 @@ public abstract class Robot extends Circle {
 
     public abstract boolean canMove(double x, double y);
 
-    protected void rotateC() {
+    public void rotateAc() {
         angle = (angle - rangle + 360) % 360;
     }
 
-    protected void rotateAc() {
+    public void rotateC() {
         angle = (angle + rangle) % 360;
     }
 
@@ -55,9 +54,6 @@ public abstract class Robot extends Circle {
         if (onUpdateListener != null) {
             onUpdateListener.onUpdate();
         }
-    }
-    public void setOnUpdate(OnUpdateListener listener) {
-        this.onUpdateListener = listener;
     }
 
     public interface OnUpdateListener {
