@@ -16,7 +16,7 @@ import javafx.scene.input.KeyEvent;
 public class GameController {
     Maze maze;
     ControlledRobot crobot;
-
+    AnimationTimer timer;
     Logger logger;
     public GameController(Maze maze, Logger logger)
     {
@@ -48,7 +48,7 @@ public class GameController {
         }
     }
     public void startAnimation() {
-        AnimationTimer timer = new AnimationTimer() {
+         timer = new AnimationTimer() {
             @Override
             public void handle(long now) {
                 updateObjects();
@@ -56,6 +56,11 @@ public class GameController {
         };
 
         timer.start();
+    }
+
+    public void stopAnimation()
+    {
+        timer.stop();
     }
 
     public void updateObjects()

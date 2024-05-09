@@ -48,6 +48,11 @@ public class App extends Application {
             game = new Game(log, maze);
             returnButton= new Button("Return");
             returnButton.setOnAction(event -> {
+                if(!settingsMenu.replay)
+                {
+                    controller.stopAnimation();
+                }
+                settingsMenu.replay = false;
                 primaryStage.close();
                 primaryStage.setScene(sets);
                 primaryStage.setFullScreen(true);
@@ -55,7 +60,6 @@ public class App extends Application {
             });
             if(settingsMenu.replay())
             {
-                settingsMenu.replay = false;
                 log.setMaze(maze);
                 log.parseLog();
                 primaryStage.setScene(createReplay());

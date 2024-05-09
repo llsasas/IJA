@@ -28,8 +28,7 @@ public class Logger {
     public Logger(String filename) throws IOException {
         //String filePath = System.getProperty("user.dir") + File.separator + "data" + File.separator + "logs" + File.separator;
         file = new File(filename);
-        if (file.exists())
-        {
+        if (file.exists()) {
             file.delete();
             file.createNewFile();
         }
@@ -57,6 +56,18 @@ public class Logger {
         }
     }
 
+    public void dfile() throws IOException {
+        if(file.exists())
+    {
+        file.delete();
+        file.createNewFile();
+    }
+}
+    public void dmoves()
+    {
+        moves = null;
+        moves = new ArrayList<>();
+    }
     public void parseLog() {
         try (BufferedReader br = new BufferedReader(new FileReader(file))) {
             String line;

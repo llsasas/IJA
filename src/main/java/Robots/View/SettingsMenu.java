@@ -92,7 +92,13 @@ public class SettingsMenu extends GridPane {
                     getChildren().clear();
 
             try {
-                log = new Logger("data/log.txt");
+                if(log == null) {
+                    log = new Logger("data/log.txt");
+                }
+                else
+                {
+                    log.dfile();
+                }
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
@@ -108,13 +114,19 @@ public class SettingsMenu extends GridPane {
         loadmap.setOnAction(event -> {
             maze = MapHandler.loadMap("data/map.txt");
             try {
-                log = new Logger("data/log.txt");
+                if(log == null) {
+                    log = new Logger("data/log.txt");
+                }
+                else
+                {
+                    log.dfile();
+                }
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
             showMainMenu();
             onApplySettingsListener.onApplySettings();
-                }
+              }
         );
     }
     private void showMapCreate()
