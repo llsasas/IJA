@@ -16,5 +16,6 @@ Cílem simulátoru je umožnit vizualizaci a kontrolu pohybu robotů v 2D prosto
 ## Překlad a spuštění
 
 Překlad pomocí 'mvn package'
+
 Kompilace a spuštění: 'mvn javafx:run' v root directory
 
